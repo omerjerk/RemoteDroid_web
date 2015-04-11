@@ -17,6 +17,18 @@
             localStorage['url'] = url;
             console.log("Creating websocket connection");
             var ws = new WebSocket(url);
+
+            ws.onopen = function() {
+                console.log("connected");
+            };
+
+            ws.onmessage = function() {
+                console.log("data received");
+            };
+
+            ws.onclose = function() {
+                console.log("disconnected");
+            };
         };
     </script>
     <body>
