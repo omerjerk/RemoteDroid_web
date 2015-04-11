@@ -2,12 +2,25 @@
 <html>
     <head>
         <title>RemoteDroid Web Client</title>
-        <link type="text/css" href="screen.css" rel="stylesheet" />
+        <link type="text/css" href="styles.css" rel="stylesheet" />
+        <script src="jquery/jquery.min.js"></script>
+       <!-- <script src="jquery/jquery-ui.js"></script> -->
     </head>
     <script type="text/javascript">
-        //TODO: JavaScript goes here
+        $(document).ready(function(){
+            var chachedUrl = localStorage['url'] || "ws://";
+            $('#addressInput').val(chachedUrl);
+        });
+
+        function startWebSocketClient() {
+            var url = $('#addressInput').val();
+            localStorage['url'] = url;
+            console.log("Creating websocket connection");
+            var ws = new WebSocket(url);
+        };
     </script>
     <body>
-        
+        <input id="addressInput" type="text" value="ws://" ></input>
+        <button id="startButton" type="button" onclick="startWebSocketClient()">Start WebSocket</button>
     </body>
 </html>
