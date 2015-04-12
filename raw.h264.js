@@ -9,13 +9,21 @@ var toUint8Array = function(parStr){
   for(i = 0; i < rawLength; i++) {
     array[i] = raw.charCodeAt(i);
   }
-  return array;    
+  return array;
 };
 
-var RawRender = function(url) {
-	this.url = url;
+var RawRenderer = function(_useWorker) {
+	// this.url = url;
+	this.player = new Player({
+		useWorker : _useWorker,
+		workerFile : "Decoder.js"
+	});
 };
 
-RawRender.prototype.render = function() {
+RawRenderer.prototype.getCanvas = function() {
+	return this.player.canvas;
+};
+
+RawRenderer.prototype.render = function() {
 	console.log("redering");
 };
