@@ -18,12 +18,22 @@ var RawRenderer = function(_useWorker) {
 		useWorker : _useWorker,
 		workerFile : "Decoder.js"
 	});
+	this.fileReader = new FileReader();
+	var that = this;
+	this.fileReader.onload = function() {
+		that.onDecodeMessage(that.fileReader.result);
+	};
 };
 
 RawRenderer.prototype.getCanvas = function() {
 	return this.player.canvas;
 };
 
-RawRenderer.prototype.render = function() {
-	console.log("redering");
+RawRenderer.prototype.render = function(data) {
+	console.log("rendering");
+	this.fileReader.readAsText(data);
+};
+
+RawRenderer.prototype.onDecodeMessage = function(data) {
+	console.log(data);
 };

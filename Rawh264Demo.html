@@ -16,7 +16,9 @@
             $('#stopButton').click(function() {
                 if (typeof ws !== "undefined") {
                     ws.close();
-                }                
+                } else {
+                    console.log("Start a websocket connection first.");
+                }
             });
         });
 
@@ -35,7 +37,11 @@
             };
 
             ws.onmessage = function(event) {
-                console.log("data received = " + event.data);
+                if (event.data.size > 25) {
+                    rawRenderer.render(event.data);
+                }
+                // console.log("data received = " + JSON.stringify(event.data, null, 4));
+                // console.log("string = " + event.data);
             };
 
             ws.onclose = function() {
@@ -44,7 +50,7 @@
         };
     </script>
     <body>
-        <input id="addressInput" type="text" value="ws://" ></input>
+        <input id="addressInput" type="text" value="" ></input>
         <button id="startButton" type="button" onclick="startWebSocketClient()">Start WebSocket</button>
         <button id="stopButton" type="button">Stop WebSocket</button>
     </body>
