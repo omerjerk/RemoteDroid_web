@@ -10,7 +10,7 @@
     </head>
     <script type="text/javascript">
         $(document).ready(function(){
-            var chachedUrl = localStorage['url'] || "ws://";
+            var chachedUrl = localStorage['url'] || "";
             $('#addressInput').val(chachedUrl);
         });
 
@@ -18,7 +18,7 @@
             var url = $('#addressInput').val();
             localStorage['url'] = url;
             console.log("Creating websocket connection");
-            var ws = new WebSocket(url);
+            var ws = new WebSocket("ws://" + url);
 
             var rawRenderer;
 
