@@ -9,27 +9,33 @@
        <!-- <script src="jquery/jquery-ui.js"></script> -->
     </head>
     <script type="text/javascript">
+        var ws;
         $(document).ready(function(){
             var chachedUrl = localStorage['url'] || "";
             $('#addressInput').val(chachedUrl);
+            $('#stopButton').click(function() {
+                if (typeof ws !== "undefined") {
+                    ws.close();
+                }                
+            });
         });
 
         function startWebSocketClient() {
             var url = $('#addressInput').val();
             localStorage['url'] = url;
             console.log("Creating websocket connection");
-            var ws = new WebSocket("ws://" + url);
+            ws = new WebSocket("ws://" + url);
 
             var rawRenderer;
 
-            ws.onopen = function() {
+            ws.onopen = function(event) {
                 console.log("connected");
                 rawRenderer = new RawRenderer(true);
                 $(document).append(rawRenderer.getCanvas());
             };
 
-            ws.onmessage = function() {
-                console.log("data received");
+            ws.onmessage = function(event) {
+                console.log("data received = " + event.data);
             };
 
             ws.onclose = function() {
@@ -40,5 +46,6 @@
     <body>
         <input id="addressInput" type="text" value="ws://" ></input>
         <button id="startButton" type="button" onclick="startWebSocketClient()">Start WebSocket</button>
+        <button id="stopButton" type="button">Stop WebSocket</button>
     </body>
 </html>
